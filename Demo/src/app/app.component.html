@@ -1,0 +1,49 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <h3 class="text text-center">Files Page</h3>
+      <div class="text text-right">
+        <!-- <i class="fa fa-upload" aria-hidden="true"></i> -->
+        <input type="file" multiple (change)="fileuploads($event)">
+       
+        <button type="button" class="btn btn-danger" (click)="deleteAll()"><i class="fa fa-trash" aria-hidden="true">DeleteAll</i></button>
+        
+      </div>
+      <!-- <div class="form-group">
+         <input class="form-control" type="text" name="search" [(ngModel)]="filter"> 
+        <button type="button" class="btn btn-success" (click)="save()">Submit</button>
+      </div> -->
+    </div>
+  </div>
+  
+  <h3>Uploaded files</h3>
+  <div class="search">
+   
+    <input class="form-control" type="text" name="search" [(ngModel)]="filter" placeholder="Search "> 
+  </div>
+  <br/>
+  <table class="table table-bordered">
+    <thead class="thead-light">
+      <th>Select All<input type="checkbox" id="sAll" (change)="bulkselect($event)"></th>
+      <th (click)="sort('name')">File Name<i class="fa fa-sort" aria-hidden="true"></i>  </th>
+      <th (click)="sort('type')">File Type<i class="fa fa-sort" aria-hidden="true"></i></th>
+      <th>Updated On</th>
+      <th (click)="sort('size')">Size<i class="fa fa-sort" aria-hidden="true"></i></th>
+      <th>Action</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let image of images| filter:filter| orderBy: key : reverse| paginate:{itemsPerPage:5, currentPage:p}">
+        <!-- <td><img [src]="image.url" style="height: 30px; width: 30px;"></td> -->
+        <td><input type="checkbox" id="checkbox" [checked]="checks"></td>
+        <td>{{image.name}}</td>
+        <td>{{image.type}}</td>
+        <td>{{image.dated |date:mediumDate}}</td>
+        <td>{{image.size|convert}}</td>
+        <td><a href="#" (click)="deleteImage(image)"><i class="fa fa-trash btn-danger" aria-hidden="true"></i></a>/
+        <!-- <a href="#" (click)="downloadFile(image)"><i class="fa fa-download"></i></a> -->
+        <a href="#" (click)="downFile(image)"><i class="fa fa-download"></i></a></td>
+      </tr>
+    </tbody>
+  </table>
+  <pagination-controls (pageChange)="p=$event"></pagination-controls>
+</div>
